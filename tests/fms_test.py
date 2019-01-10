@@ -42,14 +42,14 @@ class TestE2E(unittest.TestCase):
     def test_name_suffix_fms(self):
         self.assertEqual(self.result['fms']["aws_subnet.fms"]["tags.Name"], "subnet-fms-apps-preprod-dq")
 
-    def test_name_suffix_fms_rds(self):
-        self.assertEqual(self.result['fms']["aws_security_group.fms_rds"]["tags.Name"],"sg-db-fms-apps-preprod-dq")
+    #def test_name_suffix_fms_rds(self):
+    #    self.assertEqual(self.result['fms']["aws_security_group.fms_rds"]["tags.Name"],"sg-db-fms-apps-preprod-dq")
 
     #def test_subnet_group(self):
     #    self.assertEqual(self.result['fms']["aws_db_subnet_group.rds"]["tags.Name"], "rds-subnet-group-datafeeds-apps-preprod-dq")
 
-    def test_az2_subnet(self):
-        self.assertEqual(self.result['fms']["aws_subnet.fms_az2"]["tags.Name"], "az2-subnet-fms-apps-preprod-dq")
+    #def test_az2_subnet(self):
+    #    self.assertEqual(self.result['fms']["aws_subnet.fms_az2"]["tags.Name"], "az2-subnet-fms-apps-preprod-dq")
 
     #def test_rds_name(self):
     #    self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["tags.Name"],"ext-postgres-datafeeds-apps-preprod-dq")
