@@ -24,7 +24,7 @@ class TestE2E(unittest.TestCase):
               opssubnet_cidr_block             = "1.2.3.0/24"
               fms_cidr_block                   = "10.1.40.0/24"
               fms_cidr_block_az2               = "10.1.41.0/24"
-              data_pipe_apps_cidr_block        = "1.2.3.0/24"
+              #data_pipe_apps_cidr_block        = "1.2.3.0/24"
               peering_cidr_block               = "1.1.1.0/24"
               az                               = "eu-west-2a"
               az2                              = "eu-west-2b"
