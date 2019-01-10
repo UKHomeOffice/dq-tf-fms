@@ -13,7 +13,7 @@ class TestE2E(unittest.TestCase):
               skip_get_ec2_platforms = true
             }
 
-            module "data_feeds" {
+            module "fms" {
               source = "./mymodule"
 
               providers = {
@@ -46,16 +46,16 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result['fms']["aws_security_group.fms_rds"]["tags.Name"],"sg-db-fms-apps-preprod-dq")
 
     #def test_subnet_group(self):
-    #    self.assertEqual(self.result['data_feeds']["aws_db_subnet_group.rds"]["tags.Name"], "rds-subnet-group-datafeeds-apps-preprod-dq")
+    #    self.assertEqual(self.result['fms']["aws_db_subnet_group.rds"]["tags.Name"], "rds-subnet-group-datafeeds-apps-preprod-dq")
 
     def test_az2_subnet(self):
         self.assertEqual(self.result['fms']["aws_subnet.fms_az2"]["tags.Name"], "az2-subnet-fms-apps-preprod-dq")
 
     #def test_rds_name(self):
-    #    self.assertEqual(self.result['data_feeds']["aws_db_instance.postgres"]["tags.Name"],"ext-postgres-datafeeds-apps-preprod-dq")
+    #    self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["tags.Name"],"ext-postgres-datafeeds-apps-preprod-dq")
 
     #def test_rds_id(self):
-    #    self.assertEqual(self.result['data_feeds']["aws_db_instance.postgres"]["identifier"], "ext-postgres-datafeeds-apps-preprod-dq")
+    #    self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["identifier"], "ext-postgres-datafeeds-apps-preprod-dq")
 
 if __name__ == '__main__':
     unittest.main()

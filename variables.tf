@@ -16,7 +16,3 @@ variable "route_table_id" {
   default     = false
   description = "Value obtained from Apps module"
 }
-
-variable "dq_database_cidr_block_secondary" {
-  type = "list"
-}
