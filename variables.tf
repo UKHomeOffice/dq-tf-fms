@@ -1,5 +1,5 @@
 variable "appsvpc_id" {}
-variable "opssubnet_cidr_block" {}
+#variable "opssubnet_cidr_block" {}
 variable "fms_cidr_block" {}
 variable "peering_cidr_block" {}
 variable "az" {}
