@@ -21,7 +21,7 @@ class TestE2E(unittest.TestCase):
               }
 
               appsvpc_id                       = "1234"
-              opssubnet_cidr_block             = "1.2.3.0/24"
+              #opssubnet_cidr_block             = "1.2.3.0/24"
               fms_cidr_block                   = "10.1.40.0/24"
               fms_cidr_block_az2               = "10.1.41.0/24"
               #data_pipe_apps_cidr_block        = "1.2.3.0/24"
