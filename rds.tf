@@ -52,7 +52,7 @@ resource "aws_security_group" "fms_db" {
 
     cidr_blocks = [
       #"${var.data_pipe_apps_cidr_block}",
-      #"${var.opssubnet_cidr_block}",
+      "${var.opssubnet_cidr_block}",
       #"${var.data_feeds_cidr_block}",
       "${var.peering_cidr_block}",
     ]
