@@ -44,29 +44,44 @@ resource "aws_security_group" "fms_db" {
   tags {
     Name = "sg-db-${local.naming_suffix}"
   }
+}
 
-  ingress {
-    from_port = 5432
-    to_port   = 5432
-    protocol  = "tcp"
+resource "aws_security_group_rule" "allow_bastion" {
+  type            = "ingress"
+  description     = "Postgres from the Bastion host"
+  from_port       = "${var.rds_from_port}"
+  to_port         = "${var.rds_to_port}"
+  protocol        = "${var.rds_protocol}"
+  cidr_blocks = [
+    "${var.opssubnet_cidr_block}",
+    "${var.peering_cidr_block}",
+  ]
 
-    cidr_blocks = [
-      #"${var.data_pipe_apps_cidr_block}",
-      "${var.opssubnet_cidr_block}",
-      #"${var.data_feeds_cidr_block}",
-      "${var.peering_cidr_block}",
-    ]
-  }
+  security_group_id = "${aws_security_group.fms_db.id}"
+}
 
-  egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
+resource "aws_security_group_rule" "allow_db_lambda" {
+  type            = "ingress"
+  description     = "Postgres from the Lambda subnet"
+  from_port       = "${var.rds_from_port}"
+  to_port         = "${var.rds_to_port}"
+  protocol        = "${var.rds_protocol}"
+  cidr_blocks = [
+    "${var.dq_lambda_subnet_cidr}",
+    "${var.dq_lambda_subnet_cidr_az2}",
+  ]
 
-    cidr_blocks = [
-      "0.0.0.0/0",
-    ]
-  }
+  security_group_id = "${aws_security_group.fms_db.id}"
+}
+
+resource "aws_security_group_rule" "allow_db_out" {
+  type            = "egress"
+  from_port       = 0
+  to_port         = 0
+  protocol        = -1
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = "${aws_security_group.fms_db.id}"
 }
 
 resource "aws_db_instance" "postgres" {
