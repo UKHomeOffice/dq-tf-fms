@@ -91,6 +91,8 @@ resource "aws_db_instance" "postgres" {
   engine                  = "postgres"
   engine_version          = "10.4"
   instance_class          = "db.t2.small"
+  name                    = "${var.database_name}"
+  port                    = "${var.port}"
   username                = "${random_string.username.result}"
   password                = "${random_string.password.result}"
   backup_window           = "00:00-01:00"
@@ -104,7 +106,7 @@ resource "aws_db_instance" "postgres" {
   vpc_security_group_ids = ["${aws_security_group.fms_db.id}"]
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false 
   }
 
   tags {

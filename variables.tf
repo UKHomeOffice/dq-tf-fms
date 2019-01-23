@@ -11,6 +11,16 @@ variable "naming_suffix" {
   description = "Naming suffix for tags, value passed from dq-tf-apps"
 }
 
+variable "database_name" {
+  default     = "fms"
+  description = "RDS Postgres database name"
+}
+
+variable "port" {
+  default     = "5432"
+  description = "RDS Postgres port access"
+}
+
 variable "route_table_id" {
   default     = false
   description = "Value obtained from Apps module"
