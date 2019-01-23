@@ -106,7 +106,7 @@ resource "aws_db_instance" "postgres" {
   vpc_security_group_ids = ["${aws_security_group.fms_db.id}"]
 
   lifecycle {
-    prevent_destroy = false 
+    prevent_destroy = true 
   }
 
   tags {
