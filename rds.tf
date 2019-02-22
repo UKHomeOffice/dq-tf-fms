@@ -110,7 +110,7 @@ resource "aws_db_instance" "postgres" {
   }
 
   tags {
-    Name = "fms-postgres-${local.naming_suffix}"
+    Name = "postgres-${local.naming_suffix}"
   }
 }
 
