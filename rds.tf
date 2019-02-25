@@ -89,7 +89,7 @@ resource "aws_db_instance" "postgres" {
   allocated_storage       = 20
   storage_type            = "gp2"
   engine                  = "postgres"
-  engine_version          = "10.4"
+  engine_version          = "10.6"
   instance_class          = "db.m5.large"
   name                    = "${var.database_name}"
   port                    = "${var.port}"
@@ -106,7 +106,7 @@ resource "aws_db_instance" "postgres" {
   vpc_security_group_ids = ["${aws_security_group.fms_db.id}"]
 
   lifecycle {
-    prevent_destroy = true 
+    prevent_destroy = true
   }
 
   tags {
