@@ -56,5 +56,17 @@ class TestE2E(unittest.TestCase):
     def test_name_suffix_rds_instance(self):
         self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["tags.Name"], "postgres-fms-apps-preprod-dq")
 
+    def test_rds_fms_service_username(self):
+        self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_username"]["name"], "rds_fms_service_username")
+
+    def test_rds_fms_service_username_type(self):
+        self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_username"]["type"], "SecureString")
+
+    def test_rds_fms_service_password(self):
+        self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_password"]["name"], "rds_fms_service_password")
+
+    def test_rds_fms_service_password_type(self):
+        self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_password"]["type"], "SecureString")
+
 if __name__ == '__main__':
     unittest.main()

@@ -117,13 +117,40 @@ resource "aws_db_instance" "postgres" {
 }
 
 resource "aws_ssm_parameter" "rds_fms_username" {
-  name  = "rds_fms_username"
-  type  = "SecureString"
-  value = "${random_string.username.result}"
+  name        = "rds_fms_username"
+  type        = "SecureString"
+  description = "FMS RDS master username"
+  value       = "${random_string.username.result}"
 }
 
 resource "aws_ssm_parameter" "rds_fms_password" {
-  name  = "rds_fms_password"
-  type  = "SecureString"
-  value = "${random_string.password.result}"
+  name        = "rds_fms_password"
+  type        = "SecureString"
+  description = "FMS RDS master password"
+  value       = "${random_string.password.result}"
+}
+
+resource "random_string" "service_username" {
+  length  = 8
+  special = false
+  number  = false
+}
+
+resource "random_string" "service_password" {
+  length  = 16
+  special = false
+}
+
+resource "aws_ssm_parameter" "rds_fms_service_username" {
+  name        = "rds_fms_service_username"
+  type        = "SecureString"
+  description = "FMS RDS read_only username"
+  value       = "${random_string.service_username.result}"
+}
+
+resource "aws_ssm_parameter" "rds_fms_service_password" {
+  name        = "rds_fms_service_password"
+  type        = "SecureString"
+  description = "FMS RDS read_only password"
+  value       = "${random_string.service_password.result}"
 }
