@@ -56,6 +56,9 @@ class TestE2E(unittest.TestCase):
     def test_name_suffix_rds_instance(self):
         self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["tags.Name"], "postgres-fms-apps-preprod-dq")
 
+    def test_rds_deletion_protection(self):
+        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["deletion_protection"], "true")    
+
     def test_rds_fms_service_username(self):
         self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_username"]["name"], "rds_fms_service_username")
 
@@ -67,9 +70,6 @@ class TestE2E(unittest.TestCase):
 
     def test_rds_fms_service_password_type(self):
         self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_password"]["type"], "SecureString")
-
-    def test_rds_deletion_protection(self):
-        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["deletion_protection"], "true")
 
 if __name__ == '__main__':
     unittest.main()
