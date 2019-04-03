@@ -69,7 +69,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_password"]["type"], "SecureString")
 
     def test_rds_deletion_protection(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["deletion_protection"], "true")
+        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["deletion_protection"], "true")
 
 if __name__ == '__main__':
     unittest.main()
