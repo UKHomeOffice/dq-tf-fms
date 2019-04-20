@@ -88,7 +88,7 @@ resource "aws_security_group_rule" "allow_db_out" {
 
 resource "aws_db_instance" "postgres" {
   identifier                      = "fms-postgres-${local.naming_suffix}"
-  allocated_storage               = 20
+  allocated_storage               = 50
   storage_type                    = "gp2"
   engine                          = "postgres"
   engine_version                  = "10.6"
