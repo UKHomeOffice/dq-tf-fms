@@ -106,6 +106,9 @@ resource "aws_db_instance" "postgres" {
   multi_az                        = true
   skip_final_snapshot             = true
 
+  monitoring_interval  = "60"
+  monitoring_role_arn  = "${var.rds_enhanced_monitoring_role}"
+
   db_subnet_group_name   = "${aws_db_subnet_group.rds.id}"
   vpc_security_group_ids = ["${aws_security_group.fms_db.id}"]
 

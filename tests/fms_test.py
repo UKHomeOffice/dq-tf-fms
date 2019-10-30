@@ -28,6 +28,8 @@ class TestE2E(unittest.TestCase):
               az                               = "eu-west-2a"
               az2                              = "eu-west-2b"
               naming_suffix                    = "apps-preprod-dq"
+              rds_enhanced_monitoring_role     = "arn:aws:iam::123456789:role/rds-enhanced-monitoring-role"
+
             }
         """
         self.result = Runner(self.snippet).result
@@ -57,7 +59,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["tags.Name"], "postgres-fms-apps-preprod-dq")
 
     def test_rds_deletion_protection(self):
-        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["deletion_protection"], "true")    
+        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["deletion_protection"], "true")
 
     def test_rds_fms_service_username(self):
         self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_username"]["name"], "rds_fms_service_username")
