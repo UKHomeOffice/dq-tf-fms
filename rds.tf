@@ -99,15 +99,16 @@ resource "aws_db_instance" "postgres" {
   username                        = "${random_string.username.result}"
   password                        = "${random_string.password.result}"
   backup_window                   = "00:00-01:00"
-  maintenance_window              = "mon:01:30-mon:02:30"
+  maintenance_window              = "mon:16:30-mon:17:30"
   backup_retention_period         = 14
   deletion_protection             = true
   storage_encrypted               = true
   multi_az                        = true
   skip_final_snapshot             = true
+  ca_cert_identifier              = "${var.environment == "prod" ? "rds-ca-2015" : "rds-ca-2019"}"
 
-  monitoring_interval  = "60"
-  monitoring_role_arn  = "${var.rds_enhanced_monitoring_role}"
+  monitoring_interval = "60"
+  monitoring_role_arn = "${var.rds_enhanced_monitoring_role}"
 
   db_subnet_group_name   = "${aws_db_subnet_group.rds.id}"
   vpc_security_group_ids = ["${aws_security_group.fms_db.id}"]
@@ -128,9 +129,9 @@ module "rds_alarms" {
   environment                  = "${var.naming_suffix}"
   pipeline_name                = "FMS"
   db_instance_id               = "${aws_db_instance.postgres.id}"
-  free_storage_space_threshold = 13000000000                      # 13GB free space
-  read_latency_threshold       = 0.1                              # 100 milliseconds
-  write_latency_threshold      = 0.35                             # 350 milliseconds
+  free_storage_space_threshold = 13000000000 # 13GB free space
+  read_latency_threshold       = 0.1         # 100 milliseconds
+  write_latency_threshold      = 0.35        # 350 milliseconds
 }
 
 resource "aws_ssm_parameter" "rds_fms_username" {
