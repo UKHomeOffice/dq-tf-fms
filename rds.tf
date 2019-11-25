@@ -99,7 +99,7 @@ resource "aws_db_instance" "postgres" {
   username                        = "${random_string.username.result}"
   password                        = "${random_string.password.result}"
   backup_window                   = "00:00-01:00"
-  maintenance_window              = "mon:16:30-mon:17:30"
+  maintenance_window              = "mon:17:00-mon:18:00"
   backup_retention_period         = 14
   deletion_protection             = true
   storage_encrypted               = true
