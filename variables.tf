@@ -54,3 +54,8 @@ variable "dq_lambda_subnet_cidr_az2" {
 variable "rds_enhanced_monitoring_role" {
   description = "ARN of the RDS enhanced monitoring role"
 }
+
+variable "environment" {
+  default     = "notprod"
+  description = "Switch between environments"
+}

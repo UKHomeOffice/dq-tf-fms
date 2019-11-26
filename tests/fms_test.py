@@ -28,6 +28,7 @@ class TestE2E(unittest.TestCase):
               az                               = "eu-west-2a"
               az2                              = "eu-west-2b"
               naming_suffix                    = "apps-preprod-dq"
+              environment                      = "prod"
               rds_enhanced_monitoring_role     = "arn:aws:iam::123456789:role/rds-enhanced-monitoring-role"
 
             }
