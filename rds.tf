@@ -105,7 +105,7 @@ resource "aws_db_instance" "postgres" {
   storage_encrypted               = true
   multi_az                        = true
   skip_final_snapshot             = true
-  ca_cert_identifier              = "${var.environment == "prod" ? "rds-ca-2015" : "rds-ca-2019"}"
+  ca_cert_identifier              = "${var.environment == "prod" ? "rds-ca-2019" : "rds-ca-2019"}"
 
   monitoring_interval = "60"
   monitoring_role_arn = "${var.rds_enhanced_monitoring_role}"
