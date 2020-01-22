@@ -98,8 +98,8 @@ resource "aws_db_instance" "postgres" {
   port                            = "${var.port}"
   username                        = "${random_string.username.result}"
   password                        = "${random_string.password.result}"
-  backup_window                   = "00:00-01:00"
-  maintenance_window              = "mon:01:00-mon:02:00"
+  backup_window                   = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
+  maintenance_window              = "${var.environment == "prod" ? "mon:01:00-mon:02:00" : "mon:08:00-mon:09:00"}"
   backup_retention_period         = 14
   deletion_protection             = true
   storage_encrypted               = true

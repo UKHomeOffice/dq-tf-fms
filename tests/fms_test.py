@@ -74,5 +74,11 @@ class TestE2E(unittest.TestCase):
     def test_rds_fms_service_password_type(self):
         self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_password"]["type"], "SecureString")
 
+    def test_rds_fms_backup_window(self):
+        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["backup_window"], "00:00-01:00")
+
+    def test_rds_fms_maintenance_window(self):
+        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["maintenance_window"], "mon:01:00-mon:02:00")
+
 if __name__ == '__main__':
     unittest.main()
