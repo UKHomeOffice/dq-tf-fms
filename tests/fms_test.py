@@ -80,5 +80,11 @@ class TestE2E(unittest.TestCase):
     def test_rds_fms_maintenance_window(self):
         self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["maintenance_window"], "mon:01:00-mon:02:00")
 
+    def test_rds_fms_engine_version(self):
+        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["engine_version"], "10.6")
+
+    def test_rds_fms_apply_immediately(self):
+        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["apply_immediately"], "false")
+
 if __name__ == '__main__':
     unittest.main()
