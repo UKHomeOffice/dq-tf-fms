@@ -78,10 +78,10 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["backup_window"], "00:00-01:00")
 
     def test_rds_fms_maintenance_window(self):
-        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["maintenance_window"], "mon:01:00-mon:02:00")
+        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["maintenance_window"], "tue:01:00-tue:02:00")
 
     def test_rds_fms_engine_version(self):
-        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["engine_version"], "10.6")
+        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["engine_version"], "10.10")
 
     def test_rds_fms_apply_immediately(self):
         self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["apply_immediately"], "false")
