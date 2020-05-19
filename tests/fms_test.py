@@ -33,58 +33,56 @@ class TestE2E(unittest.TestCase):
 
             }
         """
-        self.result = Runner(self.snippet).result
-
-    def test_root_destroy(self):
-        self.assertEqual(self.result["destroy"], False)
+        self.runner = Runner(self.snippet)
+        self.result = self.runner.result
 
     def test_fms(self):
-        self.assertEqual(self.result['fms']["aws_subnet.fms"]["cidr_block"], "10.1.40.0/24")
+        self.assertEqual(self.runner.get_value("module.fms.aws_subnet.fms", "cidr_block"), "10.1.40.0/24")
 
     def test_name_suffix_fms(self):
-        self.assertEqual(self.result['fms']["aws_subnet.fms"]["tags.Name"], "subnet-fms-apps-preprod-dq")
+        self.assertEqual(self.runner.get_value("module.fms.aws_subnet.fms", "tags"), {'Name': "subnet-fms-apps-preprod-dq"})
 
     def test_name_suffix_fms_rds(self):
-        self.assertEqual(self.result['fms']["aws_security_group.fms_db"]["tags.Name"],"sg-db-fms-apps-preprod-dq")
+        self.assertEqual(self.runner.get_value("module.fms.aws_security_group.fms_db", "tags"), {'Name': "sg-db-fms-apps-preprod-dq"})
 
     def test_name_suffix_az2_subnet(self):
-        self.assertEqual(self.result['fms']["aws_subnet.fms_az2"]["tags.Name"], "az2-subnet-fms-apps-preprod-dq")
+        self.assertEqual(self.runner.get_value("module.fms.aws_subnet.fms_az2", "tags"), {'Name': "az2-subnet-fms-apps-preprod-dq"})
 
     def test_name_suffix_az1_subnet(self):
-        self.assertEqual(self.result['fms']["aws_subnet.fms"]["tags.Name"], "subnet-fms-apps-preprod-dq")
+        self.assertEqual(self.runner.get_value("module.fms.aws_subnet.fms", "tags"), {'Name': "subnet-fms-apps-preprod-dq"})
 
     def test_name_suffix_subnet_group(self):
-        self.assertEqual(self.result['fms']["aws_db_subnet_group.rds"]["tags.Name"], "rds-subnet-group-fms-apps-preprod-dq")
+        self.assertEqual(self.runner.get_value("module.fms.aws_db_subnet_group.rds", "tags"), {'Name': "rds-subnet-group-fms-apps-preprod-dq"})
 
     def test_name_suffix_rds_instance(self):
-        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["tags.Name"], "postgres-fms-apps-preprod-dq")
+        self.assertEqual(self.runner.get_value("module.fms.aws_db_instance.postgres", "tags"), {'Name': "postgres-fms-apps-preprod-dq"})
 
     def test_rds_deletion_protection(self):
-        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["deletion_protection"], "true")
+        self.assertEqual(self.runner.get_value("module.fms.aws_db_instance.postgres", "deletion_protection"), True)
 
     def test_rds_fms_service_username(self):
-        self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_username"]["name"], "rds_fms_service_username")
+        self.assertEqual(self.runner.get_value("module.fms.aws_ssm_parameter.rds_fms_service_username", "name"), "rds_fms_service_username")
 
     def test_rds_fms_service_username_type(self):
-        self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_username"]["type"], "SecureString")
+        self.assertEqual(self.runner.get_value("module.fms.aws_ssm_parameter.rds_fms_service_username", "type"), "SecureString")
 
     def test_rds_fms_service_password(self):
-        self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_password"]["name"], "rds_fms_service_password")
+        self.assertEqual(self.runner.get_value("module.fms.aws_ssm_parameter.rds_fms_service_password", "name"), "rds_fms_service_password")
 
     def test_rds_fms_service_password_type(self):
-        self.assertEqual(self.result['fms']["aws_ssm_parameter.rds_fms_service_password"]["type"], "SecureString")
+        self.assertEqual(self.runner.get_value("module.fms.aws_ssm_parameter.rds_fms_service_password", "type"), "SecureString")
 
     def test_rds_fms_backup_window(self):
-        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["backup_window"], "00:00-01:00")
+        self.assertEqual(self.runner.get_value("module.fms.aws_db_instance.postgres", "backup_window"), "00:00-01:00")
 
     def test_rds_fms_maintenance_window(self):
-        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["maintenance_window"], "tue:01:00-tue:02:00")
+        self.assertEqual(self.runner.get_value("module.fms.aws_db_instance.postgres", "maintenance_window"), "tue:01:00-tue:02:00")
 
     def test_rds_fms_engine_version(self):
-        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["engine_version"], "10.10")
+        self.assertEqual(self.runner.get_value("module.fms.aws_db_instance.postgres", "engine_version"), "10.10")
 
     def test_rds_fms_apply_immediately(self):
-        self.assertEqual(self.result['fms']["aws_db_instance.postgres"]["apply_immediately"], "false")
+        self.assertEqual(self.runner.get_value("module.fms.aws_db_instance.postgres", "apply_immediately"), False)
 
 if __name__ == '__main__':
     unittest.main()
