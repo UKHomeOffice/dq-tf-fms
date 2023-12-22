@@ -35,7 +35,7 @@ resource "random_string" "password" {
 resource "random_string" "username" {
   length  = 8
   special = false
-  number  = false
+  numeric = false
 }
 
 resource "aws_security_group" "fms_db" {
@@ -94,7 +94,7 @@ resource "aws_db_instance" "postgres" {
   engine_version                  = var.environment == "prod" ? "14.7" : "14.7"
   instance_class                  = "db.m5.large"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
-  name                            = var.database_name
+  db_name                         = var.database_name
   port                            = var.port
   username                        = random_string.username.result
   password                        = random_string.password.result
@@ -128,7 +128,7 @@ resource "aws_db_instance" "postgres" {
 }
 
 module "rds_alarms" {
-  source = "github.com/UKHomeOffice/dq-tf-cloudwatch-rds"
+  source = "github.com/UKHomeOffice/dq-tf-cloudwatch-rds?ref=yel-8750-migrate-tf-version"
 
   naming_suffix                = local.naming_suffix
   environment                  = var.naming_suffix
@@ -156,7 +156,7 @@ resource "aws_ssm_parameter" "rds_fms_password" {
 resource "random_string" "service_username" {
   length  = 8
   special = false
-  number  = false
+  numeric = false
 }
 
 resource "random_string" "service_password" {
