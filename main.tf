@@ -17,4 +17,3 @@ resource "aws_route_table_association" "fms_rt_rds_az1" {
   subnet_id      = aws_subnet.fms.id
   route_table_id = var.route_table_id
 }
-
