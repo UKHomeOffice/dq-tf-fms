@@ -17,7 +17,7 @@ class TestE2E(unittest.TestCase):
               source = "./mymodule"
 
               providers = {
-                aws = "aws"
+                aws = aws
               }
 
               appsvpc_id                       = "1234"
