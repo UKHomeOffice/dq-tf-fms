@@ -35,7 +35,7 @@ resource "random_string" "password" {
 resource "random_string" "username" {
   length  = 8
   special = false
-  number  = false
+  numeric = false
 }
 
 resource "aws_security_group" "fms_db" {
@@ -94,7 +94,7 @@ resource "aws_db_instance" "postgres" {
   engine_version                  = var.environment == "prod" ? "14.7" : "14.7"
   instance_class                  = "db.m5.large"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
-  name                            = var.database_name
+  db_name                         = var.database_name
   port                            = var.port
   username                        = random_string.username.result
   password                        = random_string.password.result
@@ -133,7 +133,7 @@ module "rds_alarms" {
   naming_suffix                = local.naming_suffix
   environment                  = var.naming_suffix
   pipeline_name                = "FMS"
-  db_instance_id               = aws_db_instance.postgres.id
+  db_instance_id               = aws_db_instance.postgres.identifier
   free_storage_space_threshold = 13000000000 # 13GB free space
   read_latency_threshold       = 0.1         # 100 milliseconds
   write_latency_threshold      = 0.35        # 350 milliseconds
@@ -156,7 +156,7 @@ resource "aws_ssm_parameter" "rds_fms_password" {
 resource "random_string" "service_username" {
   length  = 8
   special = false
-  number  = false
+  numeric = false
 }
 
 resource "random_string" "service_password" {
