@@ -133,7 +133,7 @@ module "rds_alarms" {
   naming_suffix                = local.naming_suffix
   environment                  = var.naming_suffix
   pipeline_name                = "FMS"
-  db_instance_id               = aws_db_instance.postgres.id
+  db_instance_id               = aws_db_instance.postgres.identifier
   free_storage_space_threshold = 13000000000 # 13GB free space
   read_latency_threshold       = 0.1         # 100 milliseconds
   write_latency_threshold      = 0.35        # 350 milliseconds
