@@ -89,9 +89,9 @@ resource "aws_security_group_rule" "allow_db_out" {
 resource "aws_db_instance" "postgres" {
   identifier                      = "fms-postgres-${local.naming_suffix}"
   allocated_storage               = var.environment == "prod" ? "60" : "70"
-  storage_type                    = "gp2"
+  storage_type                    = "gp3"
   engine                          = "postgres"
-  engine_version                  = var.environment == "prod" ? "14.7" : "14.7"
+  engine_version                  = var.environment == "prod" ? "14.7" : "14.10"
   instance_class                  = "db.m5.large"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   db_name                         = var.database_name
@@ -111,6 +111,7 @@ resource "aws_db_instance" "postgres" {
   monitoring_role_arn             = var.rds_enhanced_monitoring_role
   db_subnet_group_name            = aws_db_subnet_group.rds.id
   vpc_security_group_ids          = [aws_security_group.fms_db.id]
+  auto_minor_version_upgrade      = true
 
   performance_insights_enabled          = true
   performance_insights_retention_period = "7"
