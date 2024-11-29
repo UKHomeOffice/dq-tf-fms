@@ -3,8 +3,8 @@ global-variables:
 #  testrunner-image: &testrunner-image quay.io/ukhomeofficedigital/tf-testrunner:32
   testrunner-image: &testrunner-image quay.io/ukhomeofficedigital/tf-testrunner:TF1.6
 #  terragrunt-image: &terragrunt-image quay.io/ukhomeofficedigital/dq-docker-terragrunt:v0.23.18
-  terragrunt-image: &terragrunt-image quay.io/ukhomeofficedigital/dq-docker-terragrunt:v0.26.2 # TF0.13
-#  terragrunt-image: &terragrunt-image quay.io/ukhomeofficedigital/dq-docker-terragrunt:TGv0.54.4_TFv1.6.6
+#  terragrunt-image: &terragrunt-image quay.io/ukhomeofficedigital/dq-docker-terragrunt:v0.26.2 # TF0.13
+  terragrunt-image: &terragrunt-image quay.io/ukhomeofficedigital/dq-docker-terragrunt:TGv0.54.4_TFv1.6.6
   vault-image: &vault-image docker.digital.homeoffice.gov.uk/dq/dq-vault-awscli:1.43
 
 kind: pipeline
@@ -78,3 +78,22 @@ steps:
   when:
     event:
       - push
+
+- name: renew-vault-tokens
+  pull: if-not-exists
+  image: *vault-image
+  commands:
+    #Renew Mode Drone Vault Token
+    - unset VAULT_ADDR
+    - unset VAULT_TOKEN
+    - export VAULT_TOKEN=$${VAULT_TOKEN_NOTPROD}
+    - export VAULT_ADDR=$${VAULT_ADDR_NOTPROD}
+    - vault token renew > /dev/null
+  environment:
+    VAULT_ADDR_NOTPROD:
+      from_secret: VAULT_ADDR_NOTPROD
+    VAULT_TOKEN_NOTPROD:
+      from_secret: VAULT_TOKEN_NOTPROD
+  when:
+    event: [ cron ]
+    cron: [ renew-vault-tokens ]
