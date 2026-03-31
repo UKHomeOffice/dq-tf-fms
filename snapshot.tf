@@ -18,7 +18,7 @@ resource "aws_db_snapshot" "fms_manual_snapshot" {
   depends_on = [aws_db_instance.postgres]
 
   # This makes sure Terraform never tries to delete or recreate it
-  #lifecycle {
-  #  ignore_changes = [db_snapshot_identifier]
-  #}
+  lifecycle {
+    ignore_changes = [db_snapshot_identifier]
+  }
 }
