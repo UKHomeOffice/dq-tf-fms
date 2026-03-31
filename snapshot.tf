@@ -3,7 +3,7 @@
 # This will create the snapshot ONLY ONCE (on first apply)
 # =============================================================================
 resource "aws_db_snapshot" "fms_manual_snapshot" {
-  db_instance_identifier = aws_db_instance.postgres.identifier   # Use .identifier, not .id
+  db_instance_identifier = aws_db_instance.postgres.identifier # Use .identifier, not .id
   db_snapshot_identifier = "fms-pre-upgrade-20260326"
 
   # Optional but recommended tags
