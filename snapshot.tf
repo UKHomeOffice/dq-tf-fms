@@ -1,24 +1,27 @@
 # =============================================================================
-# ONE-TIME MANUAL SNAPSHOT BEFORE RDS UPGRADE
-# This will create the snapshot ONLY ONCE (on first apply)
+# MANUAL PRE-UPGRADE SNAPSHOT (DISABLED BY DEFAULT)
+# This resource does NOTHING in the pipeline until you change count = 1
 # =============================================================================
-resource "aws_db_snapshot" "fms_manual_snapshot" {
-  db_instance_identifier = aws_db_instance.postgres.identifier # Use .identifier, not .id
-  db_snapshot_identifier = "fms-pre-upgrade-20260326"
 
-  # Optional but recommended tags
+resource "aws_db_snapshot" "fms_manual_snapshot" {
+  count = 0   # ← Change to 1 ONLY when you want to create the snapshot
+
+  db_instance_identifier = aws_db_instance.postgres.identifier
+  db_snapshot_identifier = "fms-pre-upgrade-${local.naming_suffix}-$(date +%Y%m%d-%H%M%S)"
+
   tags = {
-    Name        = "fms-pre-upgrade-20260331"
+    Name        = "fms-pre-upgrade-${local.naming_suffix}"
     Purpose     = "pre-rds-upgrade"
     Environment = var.environment
     CreatedBy   = "Terraform"
   }
 
-  # This ensures it runs after the RDS instance exists
   depends_on = [aws_db_instance.postgres]
 
-  # This makes sure Terraform never tries to delete or recreate it
   lifecycle {
-    ignore_changes = [db_snapshot_identifier]
+    ignore_changes = [
+      db_snapshot_identifier,
+      tags
+    ]
   }
 }
