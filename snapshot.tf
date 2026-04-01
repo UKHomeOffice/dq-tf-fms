@@ -19,10 +19,10 @@ resource "aws_db_snapshot" "fms_manual_snapshot" {
   depends_on = [aws_db_instance.postgres]
 
   lifecycle {
+    prevent_destroy = true,
     ignore_changes = [
       db_snapshot_identifier,
       tags,
-      prevent_destroy = true
     ]
   }
 }
