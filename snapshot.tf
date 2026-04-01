@@ -14,7 +14,7 @@ data "aws_db_snapshots" "existing_snapshot" {
 
 # 2. Determine if snapshot already exists
 locals {
-  snapshot_name    = "fms-pre-upgrade-${local.naming_suffix}"
+  snapshot_name = "fms-pre-upgrade-${local.naming_suffix}"
   snapshot_matches = [
     for s in data.aws_db_snapshots.existing_snapshot.ids :
     s if substr(s, length(s) - length(local.snapshot_name), length(local.snapshot_name)) == local.snapshot_name
