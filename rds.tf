@@ -127,6 +127,8 @@ resource "aws_db_instance" "postgres" {
     ignore_changes = [
       engine_version,
       identifier,
+      id,
+      tags,
     ]
   }
 
