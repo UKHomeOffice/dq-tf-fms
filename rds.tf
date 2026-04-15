@@ -126,9 +126,9 @@ resource "aws_db_instance" "postgres" {
   # TIMEOUTS - VERY IMPORTANT FOR BLUE/GREEN UPGRADES
   # ─────────────────────────────────────────────────────────────
   timeouts {
-    create  = "2h"
-    update  = "4h"     # Critical - Blue/Green engine upgrades take time
-    delete  = "2h"
+    create = "2h"
+    update = "4h" # Critical - Blue/Green engine upgrades take time
+    delete = "2h"
   }
 
   lifecycle {
