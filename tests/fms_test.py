@@ -81,7 +81,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.runner.get_value("module.fms.aws_db_instance.postgres", "engine_version"), "14.20")
 
     def test_rds_fms_apply_immediately(self):
-        self.assertEqual(self.runner.get_value("module.fms.aws_db_instance.postgres", "apply_immediately"), False)
+        self.assertEqual(self.runner.get_value("module.fms.aws_db_instance.postgres", "apply_immediately"), True)
 
 if __name__ == '__main__':
     unittest.main()
