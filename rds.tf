@@ -106,7 +106,7 @@ resource "aws_db_instance" "postgres" {
   multi_az                        = var.environment == "prod" ? "true" : "false"
   skip_final_snapshot             = true
   ca_cert_identifier              = var.environment == "prod" ? "rds-ca-rsa2048-g1" : "rds-ca-rsa2048-g1"
-  apply_immediately               = var.environment == "prod" ? "false" : "true"
+  apply_immediately               = var.environment == "prod" ? "true" : "true"
   monitoring_interval             = "60"
   monitoring_role_arn             = var.rds_enhanced_monitoring_role
   db_subnet_group_name            = aws_db_subnet_group.rds.id
