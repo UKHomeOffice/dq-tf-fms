@@ -115,7 +115,7 @@ resource "aws_db_instance" "postgres" {
   performance_insights_enabled          = true
   performance_insights_retention_period = "7"
 
-  
+
 
   lifecycle {
     prevent_destroy = true
