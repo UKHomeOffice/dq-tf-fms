@@ -106,7 +106,7 @@ resource "aws_db_instance" "postgres" {
   multi_az                        = var.environment == "prod" ? "true" : "false"
   skip_final_snapshot             = true
   ca_cert_identifier              = var.environment == "prod" ? "rds-ca-rsa2048-g1" : "rds-ca-rsa2048-g1"
-  apply_immediately               = var.environment == "prod" ? "true" : "true"
+  apply_immediately               = var.environment == "prod" ? "false" : "true"
   monitoring_interval             = "60"
   monitoring_role_arn             = var.rds_enhanced_monitoring_role
   db_subnet_group_name            = aws_db_subnet_group.rds.id
@@ -115,29 +115,15 @@ resource "aws_db_instance" "postgres" {
   performance_insights_enabled          = true
   performance_insights_retention_period = "7"
 
-  # ─────────────────────────────────────────────────────────────
-  # ZERO-DOWNTIME BLUE/GREEN DEPLOYMENT (AWS RECOMMENDED)
-  # ─────────────────────────────────────────────────────────────
-  blue_green_update {
-    enabled = true
-  }
 
-  # ─────────────────────────────────────────────────────────────
-  # TIMEOUTS - VERY IMPORTANT FOR BLUE/GREEN UPGRADES
-  # ─────────────────────────────────────────────────────────────
-  timeouts {
-    create = "2h"
-    update = "4h" # Critical - Blue/Green engine upgrades take time
-    delete = "2h"
-  }
 
   lifecycle {
     prevent_destroy = true
     ignore_changes = [
-      #engine_version,
-      #identifier,
-      #id,
-      #tags,
+      engine_version,
+      identifier,
+      id,
+      tags,
     ]
   }
 
