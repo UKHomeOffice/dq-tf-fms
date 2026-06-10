@@ -131,9 +131,9 @@ resource "aws_db_instance" "postgres" {
   # ─────────────────────────────────────────────────────────────
   # ZERO-DOWNTIME BLUE/GREEN DEPLOYMENT (AWS RECOMMENDED)
   # ─────────────────────────────────────────────────────────────
-  blue_green_update {
-    enabled = true
-  }
+  #blue_green_update {
+  #  enabled = true
+  #}
 
   # ─────────────────────────────────────────────────────────────
   # TIMEOUTS - VERY IMPORTANT FOR BLUE/GREEN UPGRADES
