@@ -121,7 +121,7 @@ resource "aws_db_instance" "postgres" {
     prevent_destroy = true
     ignore_changes = [
       #engine_version,
-      #storage_type,
+      storage_type,
       identifier,
       id,
       tags,
@@ -131,9 +131,9 @@ resource "aws_db_instance" "postgres" {
   # ─────────────────────────────────────────────────────────────
   # ZERO-DOWNTIME BLUE/GREEN DEPLOYMENT (AWS RECOMMENDED)
   # ─────────────────────────────────────────────────────────────
-  blue_green_update {
-    enabled = true
-  }
+  #blue_green_update {
+  #  enabled = true
+  #}
 
   # ─────────────────────────────────────────────────────────────
   # TIMEOUTS - VERY IMPORTANT FOR BLUE/GREEN UPGRADES
