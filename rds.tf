@@ -86,6 +86,22 @@ resource "aws_security_group_rule" "allow_db_out" {
   security_group_id = aws_security_group.fms_db.id
 }
 
+resource "aws_db_parameter_group" "postgres" {
+  name        = "fms-postgres14-${local.naming_suffix}"
+  family      = "postgres14"
+  description = "PostgreSQL 14 parameter group with logical replication enabled"
+
+  parameter {
+    name         = "rds.logical_replication"
+    value        = "1"
+    apply_method = "pending-reboot"
+  }
+
+  tags = {
+    Name = "postgres14-parameter-group-${local.naming_suffix}"
+  }
+}
+
 resource "aws_db_instance" "postgres" {
   identifier                      = "fms-postgres-${local.naming_suffix}"
   allocated_storage               = var.environment == "prod" ? "60" : "70"
@@ -111,6 +127,7 @@ resource "aws_db_instance" "postgres" {
   monitoring_role_arn             = var.rds_enhanced_monitoring_role
   db_subnet_group_name            = aws_db_subnet_group.rds.id
   vpc_security_group_ids          = [aws_security_group.fms_db.id]
+  parameter_group_name            = aws_db_parameter_group.postgres.name
 
   performance_insights_enabled          = true
   performance_insights_retention_period = "7"
