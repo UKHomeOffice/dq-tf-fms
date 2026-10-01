@@ -91,7 +91,7 @@ resource "aws_db_instance" "postgres" {
   allocated_storage               = var.environment == "prod" ? "60" : "70"
   storage_type                    = var.environment == "prod" ? "gp2" : "gp2"
   engine                          = "postgres"
-  engine_version                  = var.environment == "prod" ? "14.22" : "16.10"
+  engine_version                  = var.environment == "prod" ? "14.22" : "16.15"
   instance_class                  = "db.m5.large"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   db_name                         = var.database_name
@@ -117,16 +117,16 @@ resource "aws_db_instance" "postgres" {
 
 
 
-  #lifecycle {
-  #  prevent_destroy = true
-  #  ignore_changes = [
-  #    engine_version,
-  #    storage_type,
-  #    identifier,
-  #    id,
-  #    tags,
-  #  ]
-  #}
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes = [
+      engine_version,
+      storage_type,
+      identifier,
+      id,
+      tags,
+    ]
+  }
 
   # ─────────────────────────────────────────────────────────────
   # ZERO-DOWNTIME BLUE/GREEN DEPLOYMENT (AWS RECOMMENDED)
