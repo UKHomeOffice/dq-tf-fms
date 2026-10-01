@@ -86,13 +86,19 @@ resource "aws_security_group_rule" "allow_db_out" {
   security_group_id = aws_security_group.fms_db.id
 }
 
-resource "aws_db_instance" "postgres" {
-  name   = "fms-postgres-${local.naming_suffix}"
-  family = var.environment == "prod" ? "postgres14" : "postgres14"
+resource "aws_db_parameter_group" "postgres" {
+  name        = "fms-postgres14-${local.naming_suffix}"
+  family      = "postgres14"
+  description = "PostgreSQL 14 parameter group with logical replication enabled"
+
   parameter {
     name         = "rds.logical_replication"
     value        = "1"
     apply_method = "pending-reboot"
+  }
+
+  tags = {
+    Name = "postgres14-parameter-group-${local.naming_suffix}"
   }
 }
 
