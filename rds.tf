@@ -107,7 +107,7 @@ resource "aws_db_instance" "postgres" {
   allocated_storage               = var.environment == "prod" ? "60" : "70"
   storage_type                    = var.environment == "prod" ? "gp2" : "gp2"
   engine                          = "postgres"
-  engine_version                  = var.environment == "prod" ? "14.22" : "14.22"
+  engine_version                  = var.environment == "prod" ? "14.22" : "16.15"
   instance_class                  = "db.m5.large"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   db_name                         = var.database_name
@@ -148,18 +148,18 @@ resource "aws_db_instance" "postgres" {
   # ─────────────────────────────────────────────────────────────
   # ZERO-DOWNTIME BLUE/GREEN DEPLOYMENT (AWS RECOMMENDED)
   # ─────────────────────────────────────────────────────────────
-  #blue_green_update {
-  #  enabled = true
-  #}
+  blue_green_update {
+    enabled = true
+  }
 
   # ─────────────────────────────────────────────────────────────
   # TIMEOUTS - VERY IMPORTANT FOR BLUE/GREEN UPGRADES
   # ─────────────────────────────────────────────────────────────
-  #timeouts {
-  #  create = "4h"
-  #  update = "4h" # Critical - Blue/Green engine upgrades take time
-  #  delete = "4h"
-  #}
+  timeouts {
+    create = "4h"
+    update = "4h" # Critical - Blue/Green engine upgrades take time
+    delete = "4h"
+  }
 
   tags = {
     Name = "postgres-${local.naming_suffix}"
