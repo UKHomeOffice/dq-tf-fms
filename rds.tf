@@ -143,7 +143,7 @@ resource "aws_db_instance" "postgres" {
   monitoring_role_arn             = var.rds_enhanced_monitoring_role
   db_subnet_group_name            = aws_db_subnet_group.rds.id
   vpc_security_group_ids          = [aws_security_group.fms_db.id]
-  parameter_group_name = var.environment == "prod" ? aws_db_parameter_group.postgres.name : aws_db_parameter_group.postgres16.name
+  parameter_group_name            = var.environment == "prod" ? aws_db_parameter_group.postgres.name : aws_db_parameter_group.postgres16.name
 
   performance_insights_enabled          = true
   performance_insights_retention_period = "7"
