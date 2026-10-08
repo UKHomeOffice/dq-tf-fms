@@ -102,6 +102,22 @@ resource "aws_db_parameter_group" "postgres" {
   }
 }
 
+resource "aws_db_parameter_group" "postgres16" {
+  name        = "fms-postgres16-${local.naming_suffix}"
+  family      = "postgres16"
+  description = "PostgreSQL 16 parameter group with logical replication enabled"
+
+  parameter {
+    name         = "rds.logical_replication"
+    value        = "1"
+    apply_method = "pending-reboot"
+  }
+
+  tags = {
+    Name = "postgres16-parameter-group-${local.naming_suffix}"
+  }
+}
+
 resource "aws_db_instance" "postgres" {
   identifier                      = "fms-postgres-${local.naming_suffix}"
   allocated_storage               = var.environment == "prod" ? "60" : "70"
@@ -127,7 +143,7 @@ resource "aws_db_instance" "postgres" {
   monitoring_role_arn             = var.rds_enhanced_monitoring_role
   db_subnet_group_name            = aws_db_subnet_group.rds.id
   vpc_security_group_ids          = [aws_security_group.fms_db.id]
-  parameter_group_name            = aws_db_parameter_group.postgres.name
+  parameter_group_name            = var.environment == "prod" ? aws_db_parameter_group.postgres.name : aws_db_parameter_group.postgres16.name
 
   performance_insights_enabled          = true
   performance_insights_retention_period = "7"
