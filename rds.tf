@@ -101,7 +101,7 @@ resource "aws_db_parameter_group" "postgres" {
     prevent_destroy = true
     ignore_changes = [
       parameter,
-      parameter_group_name
+      parameter_group_name,
     ]
   }
 
@@ -125,7 +125,7 @@ resource "aws_db_parameter_group" "postgres16" {
     prevent_destroy = true
     ignore_changes = [
       parameter,
-      parameter_group_name
+      parameter_group_name,
     ]
   }
 
