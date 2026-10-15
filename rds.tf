@@ -97,13 +97,6 @@ resource "aws_db_parameter_group" "postgres" {
     apply_method = "pending-reboot"
   }
 
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      parameter
-    ]
-  }
-
   tags = {
     Name = "postgres14-parameter-group-${local.naming_suffix}"
   }
@@ -118,13 +111,6 @@ resource "aws_db_parameter_group" "postgres16" {
     name         = "rds.logical_replication"
     value        = "1"
     apply_method = "pending-reboot"
-  }
-
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      parameter
-    ]
   }
 
   tags = {
@@ -164,17 +150,17 @@ resource "aws_db_instance" "postgres" {
 
 
 
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      engine_version,
-      storage_type,
-      identifier,
-      id,
-      tags,
-      parameter_group_name,
-    ]
-  }
+  #lifecycle {
+  #  prevent_destroy = true
+  #  ignore_changes = [
+  #    engine_version,
+  #    storage_type,
+  #    identifier,
+  #    id,
+  #    tags,
+  #    parameter_group_name,
+  #  ]
+  #}
 
   # ─────────────────────────────────────────────────────────────
   # ZERO-DOWNTIME BLUE/GREEN DEPLOYMENT (AWS RECOMMENDED)
