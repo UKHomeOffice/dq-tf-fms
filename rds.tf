@@ -158,7 +158,7 @@ resource "aws_db_instance" "postgres" {
       identifier,
       id,
       tags,
-     parameter_group_name,
+      parameter_group_name,
     ]
   }
 
