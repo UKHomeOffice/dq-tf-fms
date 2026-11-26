@@ -150,17 +150,17 @@ resource "aws_db_instance" "postgres" {
 
 
 
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      engine_version,
-      storage_type,
-      identifier,
-      id,
-      tags,
-      parameter_group_name,
-    ]
-  }
+  #lifecycle {
+  #  prevent_destroy = true
+  #  ignore_changes = [
+  #    engine_version,
+  #    storage_type,
+  #    identifier,
+  #    id,
+  #    tags,
+  #    parameter_group_name,
+  #  ]
+  #}
 
   # ─────────────────────────────────────────────────────────────
   # ZERO-DOWNTIME BLUE/GREEN DEPLOYMENT (AWS RECOMMENDED)
